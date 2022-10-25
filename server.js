@@ -1,9 +1,8 @@
-import './load-env.js';
 import chalk from 'chalk';
 
 import app from './src/app.js';
 
-const PORT = 115;
+const PORT = 80;
 
 app.listen(PORT, err => {
 
