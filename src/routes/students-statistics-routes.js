@@ -2,6 +2,8 @@ import express, { json } from 'express';
 import HttpError from 'http-errors';
 import { connection } from '../libs/database.js';
 import { checkmissing } from "../tools.js";
+import chalk from 'chalk';
+
 const router = express.Router();
 
 const msgError = " does not exist, all possible values are {firstName, lastName, age, phoneNumber, email, city, nbLanguage, couple, schoolName, year, sn_ts, chimie, physique, favoriteGame, numHours}"
@@ -28,6 +30,7 @@ class studentsStatsRoutes {
                             labels.push(element.labels);
                             data.push(element.data)
                         });
+                        console.log(chalk.green(`Envoie des données de `) + chalk.blue(req.params.col) + chalk.green(" à ") + chalk.blue(req.socket.remoteAddress));
                         res.status(200).json({ labels, datasets:[{data}] });
                     }
                 });

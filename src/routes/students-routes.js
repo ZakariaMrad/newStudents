@@ -2,6 +2,8 @@ import express, { json } from 'express';
 import HttpError from 'http-errors';
 import { connection } from '../libs/database.js';
 import { checkmissing } from "../tools.js";
+import chalk from 'chalk';
+
 const router = express.Router();
 
 class studentsRoutes {
@@ -29,7 +31,8 @@ class studentsRoutes {
   }
   async getAll(req, res, next) {
     try {
-      await connection.query('SELECT * FROM InformationsPerso', function (error, results, fields) {
+      connection.query('SELECT * FROM InformationsPerso', function (error, results, fields) {
+        console.log(chalk.green(`Envoie des informations des `) + chalk.blue(results.length) + chalk.green(" étudiants à ") + chalk.blue(req.socket.remoteAddress));
         res.status(200).json(results);
       });
     } catch (error) {
@@ -50,11 +53,12 @@ class studentsRoutes {
           Values
             (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`,
         [req.body.firstName, req.body.lastName, req.body.age, req.body.phoneNumber, req.body.email,
-           req.body.city, req.body.nbLanguage, req.body.couple, req.body.schoolName, req.body.year,
-           req.body.sn_ts, req.body.chimie, req.body.physique, req.body.favoriteGame, req.body.numHours],
+        req.body.city, req.body.nbLanguage, req.body.couple, req.body.schoolName, req.body.year,
+        req.body.sn_ts, req.body.chimie, req.body.physique, req.body.favoriteGame, req.body.numHours],
         function (error, results, fields) {
           if (error)
             next(error);
+          console.log(chalk.green(`Création de l'étudiant `) + chalk.blue(req.body.firstName +" "+req.body.lastName) + chalk.green(" à provenance de ") + chalk.blue(req.socket.remoteAddress));
           res.status(200).json(results);
         });
     } catch (error) {

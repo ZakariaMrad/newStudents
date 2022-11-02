@@ -34,12 +34,12 @@ export default (err, req, res, next) => {
             }
         }
         //JWT Error
-        if(err.status) {
+        if (err.status) {
             error.status = err.status;
         }
 
-        if(!isNaN(err))
-            error.status=err;
+        if (!isNaN(err))
+            error.status = err;
         //Catch all -> 500
         if (!error.status) {
             error.status = 500;

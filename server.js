@@ -6,7 +6,7 @@ const PORT = 80;
 
 app.listen(PORT, err => {
 
-    if(err) {
+    if (err) {
         //Nous avons une erreur, on pourrait faire du code plus brillant.
         process.exit(1);
     }
